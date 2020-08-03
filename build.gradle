@@ -25,10 +25,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter")
 }
 
-task toJar2(type: Jar) {
-	//println sourceSets
-    from 'src/main/java'
-}
 
 task toJar(type: Jar) {
     from sourceSets.main.output
