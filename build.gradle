@@ -1,9 +1,10 @@
 buildscript {
     repositories {
+    	mavenLocal()
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.4.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.3.0.RELEASE")
     }
 }
 
@@ -15,11 +16,12 @@ apply plugin: 'io.spring.dependency-management'
 
 
 repositories {
+	mavenLocal()
     mavenCentral()
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter")

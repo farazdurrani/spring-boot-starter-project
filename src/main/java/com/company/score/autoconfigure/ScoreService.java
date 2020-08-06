@@ -10,10 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ScoreService implements Score {
 
     private String filePath;
     private String delimeter;
+    private boolean parallel;
 
     /**
      * Main method that finds score for each name
@@ -22,14 +26,19 @@ public class ScoreService implements Score {
      */
     @Override
     public Map<String, Integer> findScores() throws IOException {
-	List<String> names = readFile();
-	Collections.sort(names);
-	Map<String, Integer> scores = new LinkedHashMap<>();
-	int position = 0;
-	for (String name : names) {
-	    scores.put(name, calculateScore(name) * ++position);
+	List<String> names = null;
+
+	int[] position = { 0 };
+	if (parallel) {
+	    // yet to be implemented
+	    return Collections.emptyMap();
+	} else {
+	    names = readFile(parallel);
+	    Collections.sort(names);
+	    Map<String, Integer> scores = new LinkedHashMap<>();
+	    names.forEach(name -> scores.put(name, calculateScore(name) * ++position[0]));
+	    return scores;
 	}
-	return scores;
     }
 
     /**
@@ -68,10 +77,15 @@ public class ScoreService implements Score {
      * @return names in a list.
      * @throws IOException
      */
-    private List<String> readFile() throws IOException {
-	return Files.readAllLines(Paths.get(filePath)).stream()
-	    .map(line -> line.replaceAll("\"", "").split(this.delimeter))
-	    .flatMap(arr -> Arrays.stream(arr)).collect(Collectors.toList());
+    private List<String> readFile(boolean bigFile) throws IOException {
+	if (bigFile) {
+	    // yet to be completed
+	    return Collections.emptyList();
+	} else {
+	    return Files.readAllLines(Paths.get(filePath)).stream()
+	        .map(line -> line.replaceAll("\"", "").split(this.delimeter))
+	        .flatMap(arr -> Arrays.stream(arr)).collect(Collectors.toList());
+	}
     }
 
     public void setFilePath(String filePath) {
@@ -80,6 +94,10 @@ public class ScoreService implements Score {
 
     public void setDelimeter(String delimeter) {
 	this.delimeter = delimeter;
+    }
+
+    public void setParallel(boolean parallel) {
+	this.parallel = parallel;
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ScoreProperties {
     private String filePath;
     private String delimiter;
+    private boolean parallel;
 
     public String getFilePath() {
 	return filePath;
@@ -23,5 +24,13 @@ public class ScoreProperties {
     @Value("${score.delimiter:,}")
     public void setDelimiter(String delimiter) {
 	this.delimiter = delimiter;
+    }
+
+    public boolean isParallel() {
+	return parallel;
+    }
+
+    public void setParallel(boolean parallel) {
+	this.parallel = parallel;
     }
 }

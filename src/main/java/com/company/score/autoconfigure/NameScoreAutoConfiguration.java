@@ -31,6 +31,7 @@ public class NameScoreAutoConfiguration {
 	ScoreService scoreService = new ScoreService();
 	scoreService.setFilePath(this.scoreProps.getFilePath());
 	scoreService.setDelimeter(this.scoreProps.getDelimiter());
+	scoreService.setParallel(this.scoreProps.isParallel());
 	return scoreService;
     }
 
